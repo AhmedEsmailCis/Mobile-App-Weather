@@ -5,6 +5,7 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
 import WsHeader from './../components/WsHeader';
@@ -12,7 +13,8 @@ import WsTodayInfo from './../components/WsTodayInfo';
 import WsHourlyTopTab from './../components/WsHourlyTopTab';
 import WsHourlyButton from './../components/WsHourlyButton';
 import WsHourlyDataContainer from './../components/WsHourlyDataContainer';
-
+import {getDataOfWeather} from '../redux/actions';
+import Geolocation from '@react-native-community/geolocation';
 function calcTime(unixTimestamp) {
   var a = new Date(unixTimestamp * 1000);
   var months = [
@@ -74,6 +76,7 @@ function getWeatherIconUrl(icon) {
   const url = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
   return url;
 }
+
 function WeatherScreen(props) {
   const [minCon, setMin] = useState(0); //true >today false> tomorrow
   const [maxCon, setMax] = useState(24); //true >today false> tomorrow
@@ -103,7 +106,9 @@ function WeatherScreen(props) {
   );
   const [uvi, setUvi] = useState(props.weatherData.current.uvi);
   const [dt, setDt] = useState(props.weatherData.current.dt);
-
+  const currentWeather=(lat, lon) =>{
+    props.getDataOfWeather({lat,lon});
+  }
   return (
     <View style={styles.screenStyle}>
       <StatusBar backgroundColor="#171928" />
@@ -111,9 +116,17 @@ function WeatherScreen(props) {
         <ImageBackground
           source={require('../../images/homeCover.jpg')}
           style={styles.screenStyle}>
+          {props.loader ? (
+            <ActivityIndicator size="small" color="#0000ff" />
+          ) : null}
           <WsHeader
             timezone={props.weatherData.timezone}
             navigation={props.navigation}
+            onPress={() => {
+              Geolocation.getCurrentPosition((info) => {
+                currentWeather(info.coords.latitude, info.coords.longitude);
+              });
+            }}
           />
           <WsTodayInfo
             date={calcTime(props.weatherData.current.dt)}
@@ -185,12 +198,11 @@ function WeatherScreen(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    lat: state.weatherRdx.lat,
-    lon: state.weatherRdx.lon,
     weatherData: state.weatherRdx.weatherData,
+    loader: state.weatherRdx.loader,
   };
 };
-export default connect(mapStateToProps, null)(WeatherScreen);
+export default connect(mapStateToProps, {getDataOfWeather})(WeatherScreen);
 const styles = StyleSheet.create({
   screenStyle: {
     flex: 1,

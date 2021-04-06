@@ -1,85 +1,58 @@
 import React, {Component} from 'react';
 import {
-  Text,
   View,
-  TouchableOpacity,
   ActivityIndicator,
   ImageBackground,
-  Image,
   StatusBar,
+  Dimensions,
 } from 'react-native';
-import EnterIcon from 'react-native-vector-icons/Ionicons';
+const windowHeight = Dimensions.get('window').height;
 import {connect} from 'react-redux';
-import {setWeatherData} from '../redux/actions';
+import {getDataOfWeather} from '../redux/actions';
 import Geolocation from '@react-native-community/geolocation';
-import Axios from 'axios';
-const apiId = 'd582a3a2994ebdaa28a41048a5d3b990';
-const apiUrl = 'https://api.openweathermap.org/data/2.5/onecall';
-const units = 'metric';
 class LoadingScreen extends Component {
-  constructor() {
-    super();
-    this.state = {
-      lat: 0,
-      lon: 0,
-      weatherData: [],
-      loader: true,
-    };
-  }
   componentDidMount() {
     this.getCurrentLocation();
   }
   getCurrentLocation = () => {
     Geolocation.getCurrentPosition((info) => {
-      this.setState({lat: info.coords.latitude});
-      this.setState({lon: info.coords.longitude});
-      this.loadWeatherData();
+      this.props.getDataOfWeather({
+        lat: info.coords.latitude,
+        lon: info.coords.longitude,
+      });
     });
   };
-  loadWeatherData = async () => {
-    const url =
-      apiUrl +
-      '?lat=' +
-      this.state.lat.toString() +
-      '&lon=' +
-      this.state.lon.toString() +
-      '&units=' +
-      units +
-      '&appid=' +
-      apiId;
-    const x = await Axios.get(url);
-    this.setState({weatherData: x.data});
-    const {lat, lon, weatherData} = this.state;
-    this.props.setWeatherData({lat, lon, weatherData});
-    this.setState({loader: false});
-    this.props.navigation.navigate('WeatherApp');
-  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.weatherData.length != 0) {
+      this.props.navigation.navigate('WeatherApp');
+    }
+  }
   render() {
     return (
       <View style={{flex: 1}}>
-        <StatusBar backgroundColor="#171928" />
+        <StatusBar backgroundColor="#000035" />
         <ImageBackground
-          source={require('../../images/homeCover.jpg')}
+          source={require('../../images/loading.png')}
           style={{
             flex: 1,
-            justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {this.state.loader ? (
-            <ActivityIndicator size="large" color="#0000ff" />
-          ) : (
-            <View style={{flex:1, justifyContent:'flex-end',margin:50,}}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.navigate('WeatherApp');
-                }}>
-                <EnterIcon name="enter-outline" size={70} color="white" />
-              </TouchableOpacity>
-            </View>
-          )}
+          {this.props.loader ? (
+            <ActivityIndicator
+              style={{marginTop: windowHeight * 0.25}}
+              size="large"
+              color="green"
+            />
+          ) : null}
         </ImageBackground>
       </View>
     );
   }
 }
-export default connect(null, {setWeatherData})(LoadingScreen);
+const mapStateToProps = (state) => {
+  return {
+    weatherData: state.weatherRdx.weatherData,
+    loader: state.weatherRdx.loader,
+  };
+};
+export default connect(mapStateToProps, {getDataOfWeather})(LoadingScreen);

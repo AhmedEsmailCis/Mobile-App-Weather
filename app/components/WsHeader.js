@@ -14,9 +14,7 @@ function WsHeader(props) {
       <Text style={styles.cityStyle}>{props.timezone}</Text>
 
       <TouchableOpacity
-        onPress={() => {
-          //props.navigation.navigate('weatherDetails');
-        }}>
+        onPress={props.onPress}>
         <CurrentLocationIcon name={'location-arrow'} size={23} color="white" />
       </TouchableOpacity>
     </View>

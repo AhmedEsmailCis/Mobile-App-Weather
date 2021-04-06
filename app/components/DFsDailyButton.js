@@ -52,6 +52,9 @@ function DFsDailyButton(props) {
 }
 export default DFsDailyButton;
 const styles = StyleSheet.create({
+  number: {
+    color: 'grey',
+  },
   touchAbleButtonStyle: {
     justifyContent: 'center',
     alignItems: 'center',

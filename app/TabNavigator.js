@@ -4,9 +4,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import WeatherIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MapIcon from 'react-native-vector-icons/FontAwesome5';
 import SearchIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-
 import WeatherScreen from './screens/WeatherScreen';
+import SearchScreen from './screens/SearchScreen';
 const Tab = createBottomTabNavigator();
 export default function TabNavigator() {
   return (
@@ -37,11 +36,15 @@ export default function TabNavigator() {
 
       <Tab.Screen
         name="search"
-        component={SettingsScreen}
+        component={SearchScreen}
         options={{
           tabBarLabel: 'search',
           tabBarIcon: ({color, size}) => (
-            <SearchIcon color={color} name={'cloud-search-outline'} size={size} />
+            <SearchIcon
+              color={color}
+              name={'cloud-search-outline'}
+              size={size}
+            />
           ),
         }}
       />
@@ -55,7 +58,6 @@ export default function TabNavigator() {
           ),
         }}
       />
-      
     </Tab.Navigator>
   );
 }
