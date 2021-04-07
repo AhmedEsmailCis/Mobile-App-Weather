@@ -6,6 +6,7 @@ import MapIcon from 'react-native-vector-icons/FontAwesome5';
 import SearchIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import WeatherScreen from './screens/WeatherScreen';
 import SearchScreen from './screens/SearchScreen';
+import MapScreen from './screens/MapScreen';
 const Tab = createBottomTabNavigator();
 export default function TabNavigator() {
   return (
@@ -50,7 +51,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="map"
-        component={SettingsScreen}
+        component={MapScreen}
         options={{
           tabBarLabel: 'map',
           tabBarIcon: ({color, size}) => (
