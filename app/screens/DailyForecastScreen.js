@@ -18,7 +18,8 @@ function DailyForecastScreen(props) {
     <View style={{flex: 1}}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <DFsHeader
-        timezone={props.weatherData.timezone}
+        cityName={props.cityName}
+        countryName={props.countryName}
         navigation={props.navigation}
       />
       <Text style={styles.label}>Next 7 days</Text>
@@ -65,6 +66,8 @@ const mapStateToProps = (state) => {
     lat: state.weatherRdx.lat,
     lon: state.weatherRdx.lon,
     weatherData: state.weatherRdx.weatherData,
+    cityName: state.weatherRdx.cityName,
+    countryName: state.weatherRdx.countryName,
   };
 };
 export default connect(mapStateToProps, null)(DailyForecastScreen);

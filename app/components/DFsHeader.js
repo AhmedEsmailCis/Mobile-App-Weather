@@ -9,7 +9,9 @@ import BackIcon from 'react-native-vector-icons/Ionicons';
 function DFsHeader(props) {
   return (
     <View>
-      <Text style={styles.city}>{props.timezone}</Text>
+      <Text style={styles.city}>
+        {props.cityName}/ {props.countryName}
+      </Text>
       <TouchableOpacity
         onPress={() => {
           props.navigation.navigate('weatherDetails');

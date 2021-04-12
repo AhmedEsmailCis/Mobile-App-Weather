@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {getDataOfWeather} from '../redux/actions';
-import MapView, { Marker,PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, { Marker,PROVIDER_GOOGLE } from 'react-native-maps'; 
 const windowHeight=Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 class MapScreen extends Component {
@@ -20,19 +20,20 @@ class MapScreen extends Component {
       region: {
         latitude: props.lat,
         longitude: props.lon,
-        latitudeDelta: 2.5,
-        longitudeDelta: 2.5,
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.2,
       },
     };
   }
   onRegionChange = (region) => {
     this.setState({region: region});
   };
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps){
     if (!nextProps.loader) {
       this.props.navigation.navigate('weatherDetails');
     }
   }
+  
   render() {
     return (
       <View style={styles.container}>
@@ -41,8 +42,15 @@ class MapScreen extends Component {
           initialRegion={this.state.region}
           onRegionChange={this.onRegionChange}
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-          style={styles.map}
-        />
+          style={styles.map}>
+          <Marker
+            image={require('../../images/marker.png')}
+            coordinate={{
+              latitude: this.state.region.latitude,
+              longitude: this.state.region.longitude,
+            }}
+          />
+        </MapView>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -81,17 +89,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: '50%',
-    backgroundColor: '#00327B',
+    width: '40%',
+    //backgroundColor: '#EEEBE1',
     margin: 5,
-    borderRadius: 5,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    bottom: windowHeight * 0.2,
+    bottom: windowHeight * 0.23,
+    borderWidth: 2.5,
+    borderColor: "white",
   },
   label: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
+    fontSize: 17,
   },
 });

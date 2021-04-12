@@ -2,6 +2,8 @@ const initialState = {
   lat: 0,
   lon: 0,
   weatherData: [],
+  cityName:'',
+  countryName:'',
   loader: false,
   searchCheck:false,
 };
@@ -27,6 +29,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         searchCheck: action.searchCheck,
+      };
+    case 'setCityAndCountryName':
+      return {
+        ...state,
+        cityName: action.cityName,
+        countryName: action.countryName,
       };
     default:
       return state;

@@ -11,10 +11,11 @@ function WsHeader(props) {
         }}>
         <MenuIcon color="white" name={'menu'} size={33} />
       </TouchableOpacity>
-      <Text style={styles.cityStyle}>{props.timezone}</Text>
+      <Text style={styles.cityStyle}>
+        {props.cityName} / {props.countryName}
+      </Text>
 
-      <TouchableOpacity
-        onPress={props.onPress}>
+      <TouchableOpacity onPress={props.onPress}>
         <CurrentLocationIcon name={'location-arrow'} size={23} color="white" />
       </TouchableOpacity>
     </View>

@@ -22,7 +22,7 @@ class LoadingScreen extends Component {
       });
     });
   };
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.weatherData.length != 0) {
       this.props.navigation.navigate('WeatherApp');
     }

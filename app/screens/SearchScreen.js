@@ -18,7 +18,7 @@ class SearchScreen extends Component {
       inputValue: '',
     };
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.searchCheck) {
       this.props.navigation.navigate('weatherDetails');
     }

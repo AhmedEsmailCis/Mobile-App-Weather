@@ -120,7 +120,8 @@ function WeatherScreen(props) {
             <ActivityIndicator size="small" color="#0000ff" />
           ) : null}
           <WsHeader
-            timezone={props.weatherData.timezone}
+            cityName={props.cityName}
+            countryName={props.countryName}
             navigation={props.navigation}
             onPress={() => {
               Geolocation.getCurrentPosition((info) => {
@@ -200,6 +201,8 @@ const mapStateToProps = (state) => {
   return {
     weatherData: state.weatherRdx.weatherData,
     loader: state.weatherRdx.loader,
+    cityName: state.weatherRdx.cityName,
+    countryName: state.weatherRdx.countryName,
   };
 };
 export default connect(mapStateToProps, {getDataOfWeather})(WeatherScreen);

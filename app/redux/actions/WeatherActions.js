@@ -11,7 +11,7 @@ export const getDataOfWeather = ({lat, lon}) => {
   };
 };
 const loadWeatherData = async (dispatch,lat,lon) => {
-    const url =
+    const url1 =
       oneCallApi +
       '?lat=' +
      lat.toString() +
@@ -21,8 +21,24 @@ const loadWeatherData = async (dispatch,lat,lon) => {
       units +
       '&appid=' +
       apiId;
-    const weatherData = await Axios.get(url);
-    dispatch({type: 'setWeatherData',weatherData: weatherData.data});
+      const url2 =
+        onlyCurrentApi +
+        '?lat=' +
+        lat.toString() +
+        '&lon=' +
+        lon.toString() +
+        '&units=' +
+        units +
+        '&appid=' +
+        apiId;
+    const onCallWeatherData = await Axios.get(url1);
+    const currentWeatherData = await Axios.get(url2);
+    dispatch({type: 'setWeatherData', weatherData: onCallWeatherData.data});
+    dispatch({
+      type: 'setCityAndCountryName',
+      cityName: currentWeatherData.data.name,
+      countryName: currentWeatherData.data.sys.country,
+    });
     dispatch({type:"updateLoader",loader:false});
   };
   //---------------------------------------------------------------------
