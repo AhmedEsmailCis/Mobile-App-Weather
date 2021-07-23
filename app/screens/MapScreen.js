@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {getDataOfWeather} from '../redux/actions';
-import MapView, { Marker,PROVIDER_GOOGLE } from 'react-native-maps'; 
-const windowHeight=Dimensions.get('window').height;
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 class MapScreen extends Component {
   constructor(props) {
@@ -28,12 +28,11 @@ class MapScreen extends Component {
   onRegionChange = (region) => {
     this.setState({region: region});
   };
-  UNSAFE_componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!nextProps.loader) {
       this.props.navigation.navigate('weatherDetails');
     }
   }
-  
   render() {
     return (
       <View style={styles.container}>
@@ -44,7 +43,7 @@ class MapScreen extends Component {
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           style={styles.map}>
           <Marker
-            image={require('../../images/marker.png')}
+            image={require('../../images/marker.jpg')}
             coordinate={{
               latitude: this.state.region.latitude,
               longitude: this.state.region.longitude,
@@ -58,7 +57,7 @@ class MapScreen extends Component {
             this.props.getDataOfWeather({lat: latitude, lon: longitude});
           }}>
           {this.props.loader ? (
-            <ActivityIndicator size="small" color="white" />
+            <ActivityIndicator size="small" color="blue" />
           ) : (
             <Text style={styles.label}>Find Weather</Text>
           )}
@@ -69,7 +68,6 @@ class MapScreen extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    //weatherData: state.weatherRdx.weatherData,
     loader: state.weatherRdx.loader,
     lat: state.weatherRdx.lat,
     lon: state.weatherRdx.lon,
@@ -90,7 +88,6 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '40%',
-    //backgroundColor: '#EEEBE1',
     margin: 5,
     borderRadius: 10,
     justifyContent: 'center',
@@ -98,7 +95,7 @@ const styles = StyleSheet.create({
     padding: 10,
     bottom: windowHeight * 0.23,
     borderWidth: 2.5,
-    borderColor: "white",
+    borderColor: 'white',
   },
   label: {
     color: 'black',

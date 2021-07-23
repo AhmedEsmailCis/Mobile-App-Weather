@@ -15,7 +15,7 @@ function DailyForecastScreen(props) {
   const [humidity, setHumidity] = useState(props.weatherData.daily[0].humidity);
   const [pressure, setPressure] = useState(props.weatherData.daily[0].pressure);
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.view}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <DFsHeader
         cityName={props.cityName}
@@ -72,6 +72,7 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, null)(DailyForecastScreen);
 const styles = StyleSheet.create({
+  view: {flex: 1},
   label: {
     marginLeft: 20,
     marginTop: 10,

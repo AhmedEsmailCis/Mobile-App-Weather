@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import MenuIcon from 'react-native-vector-icons/Ionicons';
+import MenuIcon from 'react-native-vector-icons/Ionicons'; 
 import CurrentLocationIcon from 'react-native-vector-icons/FontAwesome5';
 function WsHeader(props) {
   return (

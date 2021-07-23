@@ -28,7 +28,7 @@ class SearchScreen extends Component {
       <View style={{flex: 1, backgroundColor: '#000035'}}>
         <StatusBar backgroundColor="#1F1B2C" />
         <ImageBackground
-          source={require('../../images/search.png')}
+          source={require('../../images/search.jpg')}
           style={{
             flex: 1,
             alignItems: 'center',
