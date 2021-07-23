@@ -27,7 +27,7 @@ function CustomDrawerContent(props) {
   return (
     <View style={{flex: 1}}>
       <Image
-        source={require('../images/drawer.png')}
+        source={require('../images/drawer.jpg')}
         style={{
           width: '100%',
           height: windowHeight * 0.2,

@@ -58,9 +58,12 @@ function calcSunRiseSet(unixTimestamp) {
   var a = new Date(unixTimestamp * 1000);
   var hour = a.getHours();
   const unit = hour >= 12 ? 'pm' : 'Am';
-  if (hour > 12) hour -= 12;
-  if (hour == 0) hour = 12;
-  const zero = hour < 10 ? '0' : '';
+  if (hour > 12) {
+    hour -= 12;
+  }
+  if (hour === 0) {
+    hour = 12;
+  }
   var min = a.getMinutes();
   var time =
     (hour < 10 ? '0' : '') +
@@ -106,9 +109,9 @@ function WeatherScreen(props) {
   );
   const [uvi, setUvi] = useState(props.weatherData.current.uvi);
   const [dt, setDt] = useState(props.weatherData.current.dt);
-  const currentWeather=(lat, lon) =>{
-    props.getDataOfWeather({lat,lon});
-  }
+  const currentWeather = (lat, lon) => {
+    props.getDataOfWeather({lat, lon});
+  };
   return (
     <View style={styles.screenStyle}>
       <StatusBar backgroundColor="#171928" />

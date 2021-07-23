@@ -5,6 +5,7 @@ import {
   ImageBackground,
   StatusBar,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
 const windowHeight = Dimensions.get('window').height;
 import {connect} from 'react-redux';
@@ -29,14 +30,11 @@ class LoadingScreen extends Component {
   }
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.view}>
         <StatusBar backgroundColor="#000035" />
         <ImageBackground
-          source={require('../../images/loading.png')}
-          style={{
-            flex: 1,
-            alignItems: 'center',
-          }}>
+          source={require('../../images/loading.jpg')}
+          style={styles.backgroundImage}>
           {this.props.loader ? (
             <ActivityIndicator
               style={{marginTop: windowHeight * 0.25}}
@@ -55,4 +53,11 @@ const mapStateToProps = (state) => {
     loader: state.weatherRdx.loader,
   };
 };
+const styles = StyleSheet.create({
+  view: {flex: 1},
+  backgroundImage: {
+    flex: 1,
+    alignItems: 'center',
+  },
+});
 export default connect(mapStateToProps, {getDataOfWeather})(LoadingScreen);
